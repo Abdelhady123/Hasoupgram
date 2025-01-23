@@ -51,4 +51,12 @@ class User extends Authenticatable
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+    public function suggested_users()
+    {
+        return User::whereNot('id', auth()->id())->get()->shuffle()->take(5);
+        //whereNot يجلب جميع النتائج التي لا تحقق الشرط المحدد
+        //'id', auth()->id() الشرط من اجل ان لا يجلب المستخدم نفسه
+        //get() جلب المطلوب
+        //->shuffle()->take(5)  جاب 5 مستخدمين بشكل عشوائي
+    }
 }

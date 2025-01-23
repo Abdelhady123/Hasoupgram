@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -13,7 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts=Post::all();
+        $suggested_users=auth()->user()->suggested_users();
+       return view('posts.index',compact(['posts','suggested_users']));
     }
 
     /**
@@ -38,11 +41,11 @@ class PostController extends Controller
 
         $data['slug']=Str::random(10);
 
-        // $data['user_id'] = auth()->user()->id;
+        $data['user_id'] = auth()->user()->id;
 
-        // Post::create($data);
+        Post::create($data);
         // او
-        auth()->user()->posts()->create($data);
+        //auth()->user()->posts()->create($data);
         return redirect()->back();
     }
 
@@ -59,7 +62,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit',compact('post'));
     }
 
     /**
@@ -67,14 +70,32 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
-    }
+        $data=$request->validate([
+            'image'=>['nullable','mimes:jpg,jpeg,png,gif'],
+            'description'=>'required'
+        ]);
+       if($request->has('image')){
+        $image=$request['image']->store('posts','public');
+        $data['image']=$image;
+       }       
+       $post->update($data);
 
+       return redirect('/p/'.$post->slug);
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Post $post)
     {
-        //
+        //لحذف الصوره من المجلد public
+        Storage::delete('public/'.$post->image);
+        //لحذف المنشور
+        $post->delete();
+        return redirect(url('home'));
+    }
+    public function explore(){
+        $posts=Post::whereRelation('owner','private_account','=',0)
+        ->whereNot('user_id',auth()->id())->simplepaginate(12);
+        return view('posts.explore',compact('posts'));
     }
 }

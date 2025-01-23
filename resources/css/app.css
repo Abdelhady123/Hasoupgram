@@ -7,6 +7,15 @@
         @apply flex flex-col bg-white my-4 rounded-xl border border-gray-200;
 
     }
+    .card-header{
+     @apply flex flex-row bg-white my-4 rounded-xl border border-gray-200;
+    }
+    .card-body{
+          
+    }
+    .card-footer{
+       @apply border-t border-t-gray-200 p-3 mt-5;
+    }
 }
 @layer utilities {
     input[type="file"]::file-selector-button {

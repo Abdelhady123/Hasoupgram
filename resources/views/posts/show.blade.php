@@ -1,11 +1,8 @@
 <x-app-layout>
-
     <div class="h-screen md:flex md:flex-row">
         {{-- left side --}}
         <div class="h-full md:w-7/12 bg-black flex items-center">
-         
             <img src="{{ asset('storage/'.$post->image) }}" alt="{{$post->description}}" class="max-h-screen object-cover mx-auto">
-
         </div>
         {{-- right side --}}
         <div class="flex w-full flex-col bg-white md:w-5/12">
@@ -13,8 +10,22 @@
         <div class="border-b-2">
             <div class="flex items-center p-5">
                 <img src="{{$post->owner->image}}" alt="{{$post->owner->username}}" class="mr-5 h-10 w-10 rounded-full">
-                <a href="/{{$post->owner->username}}" class="font-bold">{{$post->owner->username}}</a>
-                
+                <div class="grow">
+                    <a href="/{{$post->owner->username}}" class="font-bold">{{$post->owner->username}}</a>
+                </div>
+                {{-- لعرض ايقونة التعديل والحذف في حال كان المستخدم الحالي هوا صاحب المنشور --}}
+                @if($post->owner->id === auth()->id())
+                    <a href="/p/{{$post->slug}}/edit">
+                      <i class="bx bx-message-square-edit text-xl"></i>
+                    </a>
+                    <form action="/p/{{$post->slug}}/delete" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Are you sure?')">
+                           <i class="bx bx-message-square-x ml-2 text-xl text-red-600"></i>
+                        </button>
+                     </form>
+                @endif
             </div>
         </div>
            {{-- middle --}}
@@ -46,6 +57,7 @@
         </div>
         @endforeach
         </div>
+        {{-- form create comment --}}
          <div class="border-t-2 p-5">
             <form action="/p/{{$post->slug}}/comment" method="POST">
              @csrf
@@ -62,5 +74,4 @@
        </div>
       </div>
     </div>
-
 </x-app-layout>
