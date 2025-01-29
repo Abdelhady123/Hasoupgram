@@ -19,6 +19,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'bio',
+        'private_account',
         'username',
         'email',
         'image',
@@ -58,5 +60,8 @@ class User extends Authenticatable
         //'id', auth()->id() الشرط من اجل ان لا يجلب المستخدم نفسه
         //get() جلب المطلوب
         //->shuffle()->take(5)  جاب 5 مستخدمين بشكل عشوائي
+    }
+    public function likes(){
+        return $this->belongsToMany(Post::class,'likes');
     }
 }

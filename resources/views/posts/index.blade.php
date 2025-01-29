@@ -16,7 +16,7 @@
         <div class="flex flex-row text-sm">
            <div class="mr-5">
             <a href="/{{auth()->user()->username}}">
-                <img src="{{auth()->user()->image}}" alt="{{auth()->user()->username}}" class="h-12 w-12 rounded-full border border-gray-300">
+                <img src="{{asset('storage/'. auth()->user()->image)}}" alt="{{auth()->user()->username}}" class="h-12 w-12 rounded-full border border-gray-300">
             </a>
            </div>
            <div class="flex flex-col">

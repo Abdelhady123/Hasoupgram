@@ -9,6 +9,16 @@
      <div class="max-h-[35rem] overflow-hidden">
          <img src="{{asset('storage/'.$post->image)}}" class="h-auto w-full object-cover" alt="{{$post->description}}">
      </div>
+     {{-- ايقونة الاعجاب --}}
+     <div class="p-3">
+      <a href="/p/{{$post->slug}}/like">
+        @if($post->liked(auth()->user()))
+          <i class="bx bxs-heart text-red-600 text-3xl hover:text-gray-400 cursor-pointer mr-3"></i>
+        @else
+          <i class="bx bx-heart text-3xl hover:text-gray-400 cursor-pointer mr-3"></i>
+        @endif
+        </a>
+     </div>
      <div class="p-3">
          <a href="/{{$post->owner->username}}" class="font-bold mr-1">
           {{$post->owner->username}}

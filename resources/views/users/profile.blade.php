@@ -1,8 +1,13 @@
 <x-app-layout>
+  {{-- اضهار الرسالة التي تعني اتمام عملية التعديل على الحساب --}}
+    <div class="{{session('success')? '':'hidden'}} w-50 p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg absolute right-10 shadow shadow-neutral-200" role="alert">
+    <span class="font-medium">{{session('success')}}</span>
+  </div>
+    
     {{-- user Image --}}
 <div class="grid grid-cols-4">
     <div class="px-4 col-span-1 order-1">
-        <img src="{{$user->image}}" alt="{{$user->username}}' profile picture"
+        <img src="{{asset('storage/'.$user->image)}}" alt="{{$user->username}}' profile picture'"
         class="w-20 rounded-full md:w-40 border border-gray-300">
     </div>
     {{-- username and buttons --}}

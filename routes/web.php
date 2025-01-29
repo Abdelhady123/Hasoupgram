@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\likeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -34,6 +35,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/explore',[PostController::class ,'explore'])->name('explore');
 //user page
 Route::get('/{user:username}',[UserController::class ,'index'])->middleware('auth')->name('user_profile');
+Route::get('/{user:username}/edit',[UserController::class ,'edit'])->middleware('auth')->name('edit_profile');
+Route::patch('/{user:username}/update',[UserController::class ,'update'])->middleware('auth')->name('update_profile');
+
 Route::controller(PostController::class)->middleware('auth')->group(function(){
     // الصفحه الرئيسيه
     Route::get('/','index')->name('home_page');
@@ -51,5 +55,8 @@ Route::controller(PostController::class)->middleware('auth')->group(function(){
     Route::delete('/p/{post:slug}/delete','destroy')->name('delete_post');
     
     });
+
+    //مسار خاص ب ال الاعجابات
+    Route::get('/p/{post:slug}/like',likeController::class )->middleware('auth');
     // مسارات الكومنت انشاء
     Route::post('/p/{post:slug}/comment',[CommentController::class,'store'])->name('store_comment')->middleware('auth');

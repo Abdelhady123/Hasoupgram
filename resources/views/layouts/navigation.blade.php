@@ -47,7 +47,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                        <div class="ml-3">
-                       <img src="{{auth()->user()->image}}" class="h-6 w-6 rounded-full cursor-pointer">
+                       <img src="{{asset('storage/'. auth()->user()->image)}}" class="h-6 w-6 rounded-full cursor-pointer">
                     </div>
                     </x-slot>
 
