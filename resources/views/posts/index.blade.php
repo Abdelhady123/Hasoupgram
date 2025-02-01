@@ -44,12 +44,30 @@
                     <div class="flex flex-col grow">
                         <a href="{{$suggested_user->username}}"class="font-bold">
                             {{$suggested_user->username}}
+                            {{-- لي اضهار كلمة متابعة في حال كان المستخدم يتابع صاحب الحساب --}}
+                            @if(auth()->user()->is_follower($suggested_user))
+                            <span class="text-xs text-gray-500">
+                                {{__('Follower')}}
+                            </span>
+                            @endif
                         </a>
                         <div class="text-gray-500 text-sm">
                             {{$suggested_user->name}}
                         </div>
                     </div>
+                    {{-- زر المتابعة --}}
+                    
+                    @if(auth()->user()->is_pending($suggested_user))
+                     <span class="text-gray-500 font-bold">
+                        {{__('pending')}}
+                     </span>
+                     @else
+                    <a href="/{{$suggested_user->username}}/follow" class="text-blue-500 font-bold">
+                      {{__('Follow')}}
+                    </a>
+                    @endif
                 </li>
+
             @endforeach
         </ul>
     </div>

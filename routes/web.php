@@ -58,5 +58,10 @@ Route::controller(PostController::class)->middleware('auth')->group(function(){
 
     //مسار خاص ب ال الاعجابات
     Route::get('/p/{post:slug}/like',likeController::class )->middleware('auth');
+
+    //مسار خاص ب المتابعه
+    Route::get('/{user:username}/follow',[UserController::class,'follow'])->middleware('auth')->name('follow_user');
+    Route::get('/{user:username}/unfollow',[UserController::class,'unfollow'])->middleware('auth')->name('unfollow_user');
+
     // مسارات الكومنت انشاء
     Route::post('/p/{post:slug}/comment',[CommentController::class,'store'])->name('store_comment')->middleware('auth');
