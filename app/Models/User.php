@@ -74,7 +74,6 @@ class User extends Authenticatable
     //يعيد مجموعة المتابعين الذين يتابعو صاحب الحساب الحالي
     public function followers(){
         return $this->belongsToMany(User::class,'follows','following_user_id','user_id')->withTimestamps()->withPivot('confirmed');
-
     }
     //متابعة مستخدم
 public function follow(User $user){
@@ -87,7 +86,6 @@ public function follow(User $user){
     }
 
 }
-
     // ازالة المتابعة
     public function unfollow(User $user)
     {
@@ -97,10 +95,8 @@ public function follow(User $user){
     //طلب المتابعه المعلق
     public function is_pending(User $user){
         return $this->following()->where('following_user_id',$user->id)->where('confirmed',false)->exists();
-
     }
     //المتابعين
-
     public function is_follower(User $user){
         return $this->followers()->where('user_id',$user->id)->where('confirmed',true)->exists();
     }

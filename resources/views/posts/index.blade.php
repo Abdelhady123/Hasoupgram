@@ -67,11 +67,14 @@
                     </a>
                     @endif
                 </li>
-
             @endforeach
         </ul>
     </div>
-    </div>
 
+    {{--
+    طرق استدعاء المكون في livewire
+    @livewire('Counter')
+    <livewire:Counter /> --}}
+    </div>
 </div>
 </x-app-layout>

@@ -14,8 +14,8 @@
                     <a href="/{{$post->owner->username}}" class="font-bold">{{$post->owner->username}}</a>
                 </div>
                 {{-- لعرض ايقونة التعديل والحذف في حال كان المستخدم الحالي هوا صاحب المنشور --}}
-                @if($post->owner->id === auth()->id())
-                    <a href="/p/{{$post->slug}}/edit">
+               @can('update',$post)
+                <a href="/p/{{$post->slug}}/edit">
                       <i class="bx bx-message-square-edit text-xl"></i>
                     </a>
                     <form action="/p/{{$post->slug}}/delete" method="POST">
@@ -25,7 +25,9 @@
                            <i class="bx bx-message-square-x ml-2 text-xl text-red-600"></i>
                         </button>
                      </form>
-                     @elseif(auth()->user()->is_following($post->owner))
+                     @endcan
+                      @cannot('update',$post)
+                     @if(auth()->user()->is_following($post->owner))
                      <a href="/{{$post->owner->username}}/unfollow" class="w-30 bg-gray-400 text-white px-3 py-1 rounded text-center self-start">
                       {{__('UnFollow')}}
                      </a>
@@ -35,6 +37,7 @@
                        {{__('Follow')}}
                      </a>                     
                 @endif
+             @endcannot
             </div>
         </div>
            {{-- middle --}}
@@ -66,6 +69,19 @@
         </div>
         @endforeach
         </div>
+
+        <div class="p-3 flex flex-row border-t">
+            {{-- ايقونة الاعجاب --}}
+            <livewire:like :post="$post"/>
+            {{-- زر ينقل الى صفحة التعليقات --}}
+            <a class="grow" onclick="document.getElementById('coment_body').focus()">
+              <i class="bx bx-comment text-3xl hover:text-gray-400 cursor-pointer mr-3">
+              </i>
+            </a>
+       </div>
+       {{-- اضهار الاشخاص المعجبين --}}
+       <livewire:likedby :Post="$post"/>
+
         {{-- form create comment --}}
          <div class="border-t-2 p-5">
             <form action="/p/{{$post->slug}}/comment" method="POST">

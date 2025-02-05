@@ -13,10 +13,16 @@ class UserController extends Controller
         return view('users.profile', compact('user'));
     }
     public function edit(User $user){
-        if(auth()->id() !== $user->id){
-            abort(403, 'You are not authorized to see this page');
-        }
-        return view ('users.edit',compact('user'));
+      //abort_if 
+      //abort_unless
+        // if(auth()->id() !== $user->id){
+        //     abort(403, 'You are not authorized to see this page');
+        // }
+       // abort_if(auth()->id() !== $user->id,403,"You are not authorized to see this page");
+       // لي استخدام البوابة التي عملناها داخل ال auth service provider.php
+       //abort_if(auth()->user()->cannot('edit-update-profile',$user),403);
+        $this->authorize('edit-update-profile',$user);      
+       return view ('users.edit',compact('user'));
     }
     public function update(User $user,UpdateUserProfileRequest $request){
 
