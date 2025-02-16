@@ -7,8 +7,8 @@
     {{-- user Image --}}
 <div class="grid grid-cols-4">
     <div class="px-4 col-span-1 order-1">
-        <img src="{{asset('storage/'.$user->image)}}" alt="{{$user->username}}' profile picture'"
-        class="w-20 rounded-full md:w-40 border border-gray-300">
+      <img src="{{asset('storage'.$user->image)}}" alt="{{$user->username}}' profile picture'"
+      class="w-20 rounded-full md:w-40 border border-gray-300">
     </div>
     {{-- username and buttons --}}
    <div class="px-4 col-span-2 md:ml-0 items-center flex flex-row order-2 md:col-span-3">
@@ -22,20 +22,11 @@
         class="w-50 px-5 border text-sm font-bold py-1 rounded-md border-neutral-300 text-center">
       {{__('Edit profile')}}
        </a>
-       @elseif(auth()->user()->is_following($user))
-       <a href="/{{$user->username}}/unfollow" class="w-30 bg-gray-400 text-white px-3 py-1 rounded text-center self-start">
-        {{__('UnFollow')}}
-       </a>
-       @elseif(auth()->user()->is_pending($user))
-       <span class="w-30 bg-gray-400 text-white px-3 py-1 rounded text-center self-start">
-          {{__('pending')}}
-       </span>
-       @else 
-       <a href="/{{$user->username}}/follow"class="w-30 bg-blue-400 text-white px-3 py-1 rounded text-center self-start">
-         {{__('Follow')}}
-       </a>
-      @endif
-      @endauth
+       @else   
+       <livewire:follow-button :userId="$user->id" classes="bg-blue-500 text-white" />
+       @endif
+     
+        @endauth
 
       @guest
       <a href="/{{$user->username}}/follow"class="w-30 bg-blue-400 text-white px-3 py-1 rounded text-center self-start">
@@ -61,23 +52,10 @@
              {{$user->posts->count() >1 ?'posts':'post'}}
           </span>
         </li>
-        <li class="flex flex-col md:flex-row text-center">
-          <div class="md:mr-1 font-bold md-font-normal">
-            {{$user->Followers()->count()}}
-          </div>
-          <span class="text-neutral-500 md:text-black">
-          {{$user->Followers()->count()>1 ?__('followers'):__('follower')}}
-          </span>
-        </li>
-        <li class="flex flex-col md:flex-row text-center">
-          <div class="md:mr-1 font-bold md:font-normal">
-            {{$user->following()->wherePivot('confirmed',true)->get()->count()}}
-          </div>
-          <span class="text-neutral-500 md:text-black">
-           {{__('following')}}
-          </span>
-        </li>
         
+        <livewire:followerrs :userId="$user->id"/>
+
+       <livewire:following :userId="$user->id"/>
     </div>
    </div>
 </div>
@@ -86,11 +64,9 @@
 <div class="grid grid-cols-3 gap-1 my-5">
   @foreach ($user->posts as $post)
       <a href="/p/{{$post->slug}}" class="aspect-square block w-full">
-        <img src="{{ asset('storage/'.$post->image) }}" alt="{{$post->description}}" class="w-full aspect-square object-cover">
-      </a>
+        <img src=" {{asset("storage/".$post->image)}}" alt="{{$post->description}}" class="w-full aspect-square object-cover">      </a>
   @endforeach
 </div>
-
 @else
 
 <div class="w-full text-center mt-20">

@@ -76,21 +76,28 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class,'follows','following_user_id','user_id')->withTimestamps()->withPivot('confirmed');
     }
     //متابعة مستخدم
-public function follow(User $user){
-    if($user->private_account){
-        return $this->following()->attach($user);
+    public function toggle_follow(User $user){
+        $this->following()->toggle($user);
 
+        if(! $user->private_account){
+            $this->following()->updateExistingPivot($user,['confirmed'=>true]);    
+        }
     }
-    else{
-        return $this->following()->attach($user,['confirmed'=>true]);
-    }
+     public function follow(User $user){
+     if($user->private_account){
+         return $this->following()->attach($user);
 
-}
-    // ازالة المتابعة
-    public function unfollow(User $user)
+     }
+     else{
+         return $this->following()->attach($user,['confirmed'=>true]);
+     }
+
+ }
+     // ازالة المتابعة
+     public function unfollow(User $user)
     {
-        return $this->following()->detach($user);
-    }
+         return $this->following()->detach($user);
+     }
 
     //طلب المتابعه المعلق
     public function is_pending(User $user){
@@ -103,5 +110,16 @@ public function follow(User $user){
     public function is_following(User $user){
         return $this->following()->where('following_user_id',$user->id)->where('confirmed',true)->exists();
 
+    }
+    public function pending_followers(){
+       return $this->followers()->where('confirmed',false);
+    }
+    public function confirm(User $user)
+    {
+        return $this->followers()->updateExistingPivot($user,['confirmed'=>true]);
+
+    }
+    public function deleteFollowRequest(User $user){
+        return $this->followers()->detach($user);
     }
 }

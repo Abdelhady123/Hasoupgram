@@ -15,9 +15,12 @@
                 </div>
                 {{-- لعرض ايقونة التعديل والحذف في حال كان المستخدم الحالي هوا صاحب المنشور --}}
                @can('update',$post)
-                <a href="/p/{{$post->slug}}/edit">
+                {{-- <a href="/p/{{$post->slug}}/edit">
                       <i class="bx bx-message-square-edit text-xl"></i>
-                    </a>
+                    </a> --}}
+                    <button onclick="Livewire.dispatch('openModal', { component: 'edit-post-modal', arguments: { post: {{ $post->id }} } })">
+                        <i class="bx bx-message-square-edit text-xl"></i>
+                    </button>
                     <form action="/p/{{$post->slug}}/delete" method="POST">
                         @csrf
                         @method('DELETE')
@@ -27,17 +30,8 @@
                      </form>
                      @endcan
                       @cannot('update',$post)
-                     @if(auth()->user()->is_following($post->owner))
-                     <a href="/{{$post->owner->username}}/unfollow" class="w-30 bg-gray-400 text-white px-3 py-1 rounded text-center self-start">
-                      {{__('UnFollow')}}
-                     </a>
-                     
-                     @else 
-                     <a href="/{{$post->owner->username}}/follow"class="w-30 bg-blue-400 text-white px-3 py-1 rounded text-center self-start">
-                       {{__('Follow')}}
-                     </a>                     
-                @endif
-             @endcannot
+                      <livewire:Follow-button :Post="$post" :userId="$post->owner->id" classes="bg-blue-500 text-white" />
+                        @endcannot
             </div>
         </div>
            {{-- middle --}}
