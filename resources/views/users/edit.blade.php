@@ -48,7 +48,16 @@
               <input type="checkbox" name="private_account" id="private_account"
               autocomplete="private_account" class="focus:ring-neutral-500 h-4 w-4 text-neutral-600 border-gray-300 rounded" {{ $user->private_account ? 'checked': ''}}>
               </div>
-              
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <label for="lang" class="block text-sm font-medium text-gray-700">
+                {{__('Language')}}
+              </label>
+              <select id="lang" name="lang"
+              class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 ltr:px-3 rtl-px-8 shadow-sm focus:border-indigo-500 focus:outline-none ">
+              <option value="ar" {{app()->getLocale()=='ar'?'selected':''}}>العربية</option>
+              <option value="en" {{app()->getLocale()=='en'?'selected':''}}>English </option>
+            </select>
             </div>
             <div class="mt-6 flex items-center justify-end gap-x-6">
                 <x-button>{{ __('Save') }}</x-button>

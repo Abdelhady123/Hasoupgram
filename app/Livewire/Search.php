@@ -15,14 +15,13 @@ class Search extends Component
     }
     public function goto($username)
     {
-        return redirect()->rout('user_profile',['user'=>$username]);
-        
+        return redirect()->route('user_profile',['user'=>$username]);
+
     }
     public function render()
     {
         $this->results=[];
         $this->results=User::where('username','LIKE','%'.$this->searchInput.'%')->get(['id','name','username','image']);
-        
         return view('livewire.search',[
             'results'=>$this->results
         ]);

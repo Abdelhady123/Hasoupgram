@@ -11,11 +11,11 @@
       class="w-20 rounded-full md:w-40 border border-gray-300">
     </div>
     {{-- username and buttons --}}
-   <div class="px-4 col-span-2 md:ml-0 items-center flex flex-row order-2 md:col-span-3">
-    <div class="text-3xl my-10">
+   <div class="px-4 col-span-2 md:ml-0 items-center flex flex-row order-2">
+    <div class="text-3xl my-10 rtl:ml-2 ">
         {{$user->username}}
     </div>
-    <div class="ml-3 my-12">
+    <div class="ml-3 my-12 block ">
       @auth
       @if($user->id === auth()->id())
         <a href="/{{$user->username}}/edit"
@@ -48,8 +48,8 @@
           <div class="md:mr-1 font-bold md:font-normal">
             {{$user->posts->count()}}
           </div>
-          <span class="text-neatral-500 md:text-black">
-             {{$user->posts->count() >1 ?'posts':'post'}}
+          <span class="text-neatral-500 md:text-black rtl:ml-6">
+            {{$user->posts->count() > 1 ? __('posts') : __('post')}}
           </span>
         </li>
         

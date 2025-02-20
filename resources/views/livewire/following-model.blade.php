@@ -8,8 +8,8 @@
   </div>
   <ul class="overflow-y-auto">
     @forelse ($this->following_list as $following)
-        <li class="flex flex-row w-full p-3 items-center text-sm">
-            <div>
+    <li class="flex ltr:flex-row rtl:flex-row-reverse w-full p-3 items-center text-sm">
+        <div>
                 <img src="{{$following->image}}" class="w-8 h-8 mr-2 rounded-full border border-neutral-300" alt={{$following->username}}>
 
             </div>

@@ -38,10 +38,20 @@
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
-
+             <a href="/register"
+             class="inline-flex items-center rtl:mr-3 ltr:ml-3 py-2 bg-gray-300 border border-transparent rounded-md font-semibold
+             text-sm text-black hover:text-white  ltr:tracking-widest hover:bg-gray-800 active:bg-gray-500 focus:outline-none
+             focus:border-gray-900 focus:ring ring-gray-300
+             ">
+             {{__('New User')}}
+             </a>
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
+        </div>
+        <div class="w-full sm:max-w-md mt-6 py-4 text-center font-body flex justify-around text-sm font-body">
+           <a href="/lang-ar">العربية</a>
+           <a href="/lang-en">English</a>
         </div>
     </form>
 </x-guest-layout>

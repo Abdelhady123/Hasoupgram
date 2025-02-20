@@ -54,5 +54,9 @@
                 {{ __('Register') }}
             </x-primary-button>
         </div>
+        <div class="w-full sm:max-w-md mt-6 py-4 text-center font-body flex justify-around text-sm font-body">
+            <a href="/lang-ar">العربية</a>
+            <a href="/lang-en">English</a>
+         </div>
     </form>
 </x-guest-layout>

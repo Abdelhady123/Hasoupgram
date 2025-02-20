@@ -25,4 +25,12 @@
         margin-inline-start: -1rem;
         margin-inline-end: 1rem;
     }
+
+    
+
+}
+@layer base {
+    .font-body {
+        font-family: 'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif;
+    }
 }

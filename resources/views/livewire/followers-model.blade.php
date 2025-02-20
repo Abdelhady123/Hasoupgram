@@ -1,5 +1,5 @@
 <div>
-    <div class="max-h-96 flex flex-col">
+    <div class="max-h-96 flex flex-col rtl">
         <div class="flex w-full items-center border-b border-b-neutral-100 p-2">
           <h1 class="text-lg font-bold pb-2 grow text-center">{{__('Followers')}} </h1>
           <button wire:click="$dispatch('closeModal')">
@@ -15,7 +15,7 @@
                         <div class="flex items-center justify-center w-10 h-10 mr-2">
                             <img src="{{ $follower->image }}" class="w-8 h-8 rounded-full border border-neutral-300" alt="{{ $follower->username }}">
                         </div>
-                        <div class="flex flex-col grow">
+                        <div class="flex flex-col rtl:items-start grow">
                             <div class="font-bold">
                                 <a href="/{{ $follower->username }}">
                                     {{ $follower->username }}
@@ -28,7 +28,7 @@
                     </li>
                 @empty
                     <div class="w-full p-3 text-center">
-                        {{ __('You are not following anyone.') }}
+                        {{ __('You are not followed by anyone.') }}
                     </div>
                 @endforelse
             </ul>
